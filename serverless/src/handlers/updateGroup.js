@@ -8,7 +8,7 @@ export const handler = route(async ({ params, body, user }) => {
   const { name } = parseWith(createGroupSchema, body);
 
   const group = await groups.get(id);
-  if (!group) throw new HttpError(404, "Group not found");
+  if (!group) {throw new HttpError(404, "Group not found");}
 
   if (group.owner_id !== user.user_id) {
     throw new HttpError(403, "Only the group owner can edit group details");

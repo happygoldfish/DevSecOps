@@ -9,7 +9,7 @@ export const handler = route(async ({ params, user }) => {
     throw new HttpError(400, "Invalid group ID or member ID format");
   }
 
-  if (!(await groups.get(groupId))) throw new HttpError(404, "Group not found");
+  if (!(await groups.get(groupId))) {throw new HttpError(404, "Group not found");}
 
   if (!(await groupMembers.find(groupId, user.user_id))) {
     throw new HttpError(403, "You are not a member of this group");

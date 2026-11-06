@@ -71,7 +71,7 @@ const signUp = async (name) => {
 };
 
 beforeEach(() => {
-  for (const map of Object.values(db.__data)) map.clear();
+  for (const map of Object.values(db.__data)) {map.clear();}
 });
 
 describe("users", () => {

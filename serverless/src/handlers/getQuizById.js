@@ -3,10 +3,10 @@ import { groupMembers, groups, quizzes } from "../lib/repo.js";
 
 export const handler = route(async ({ params, user }) => {
   const quiz = await quizzes.get(params.id);
-  if (!quiz) throw new HttpError(404, "Quiz not found");
+  if (!quiz) {throw new HttpError(404, "Quiz not found");}
 
   const group = await groups.get(quiz.group_id);
-  if (!group) throw new HttpError(404, "Quiz group not found");
+  if (!group) {throw new HttpError(404, "Quiz group not found");}
 
   const isMember = await groupMembers.find(quiz.group_id, user.user_id);
   if (!isMember && group.owner_id !== user.user_id) {

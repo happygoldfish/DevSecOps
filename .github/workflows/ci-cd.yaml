@@ -117,6 +117,10 @@ jobs:
         working-directory: serverless
         run: npm audit --audit-level=high
 
+      - name: Serverless Lint
+        working-directory: serverless
+        run: npm run lint
+
       - name: Run serverless tests
         working-directory: serverless
         run: npm test

@@ -9,7 +9,7 @@ export const handler = route(async ({ body, user }) => {
   }
 
   const group = await groups.byInviteCode(code.trim().toUpperCase());
-  if (!group) throw new HttpError(404, "Invalid invite code");
+  if (!group) {throw new HttpError(404, "Invalid invite code");}
 
   const member = await groupMembers.add(group.id, user.user_id, "member");
 

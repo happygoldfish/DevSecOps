@@ -6,7 +6,7 @@ export const handler = route(async ({ params }) => {
   const id = requireUUID(params.groupId, "Invalid group ID format");
 
   const group = await groups.get(id);
-  if (!group) throw new HttpError(404, "Group not found");
+  if (!group) {throw new HttpError(404, "Group not found");}
 
   return [200, { success: true, group: publicGroup(group) }];
 });

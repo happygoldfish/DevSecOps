@@ -4,7 +4,7 @@ import { quizzes } from "../lib/repo.js";
 
 export const handler = route(async ({ params, body, user }) => {
   const quiz = await quizzes.get(params.id);
-  if (!quiz) throw new HttpError(404, "Quiz not found");
+  if (!quiz) {throw new HttpError(404, "Quiz not found");}
 
   if (quiz.creator_id !== user.user_id) {
     throw new HttpError(403, "Only the quiz creator can update this quiz");

@@ -14,9 +14,9 @@ export const createFakeDynamo = (tables) => {
   const rows = (name) => (data[name] ??= new Map());
 
   const conditionFails = (expr, item) => {
-    if (!expr) return false;
-    if (expr.startsWith("attribute_not_exists")) return item !== undefined;
-    if (expr.startsWith("attribute_exists")) return item === undefined;
+    if (!expr) {return false;}
+    if (expr.startsWith("attribute_not_exists")) {return item !== undefined;}
+    if (expr.startsWith("attribute_exists")) {return item === undefined;}
     throw new Error(`Unsupported condition: ${expr}`);
   };
 
@@ -44,7 +44,7 @@ export const createFakeDynamo = (tables) => {
       (item) => item[attr] === ExpressionAttributeValues[placeholder],
     );
     items.sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt)));
-    if (ScanIndexForward === false) items.reverse();
+    if (ScanIndexForward === false) {items.reverse();}
     return { Items: structuredClone(items) };
   };
 
@@ -103,8 +103,8 @@ export const createFakeDynamo = (tables) => {
           }
         }
         for (const op of input.TransactItems) {
-          if (op.Put) put({ ...op.Put, ConditionExpression: undefined });
-          if (op.Delete) remove(op.Delete);
+          if (op.Put) {put({ ...op.Put, ConditionExpression: undefined });}
+          if (op.Delete) {remove(op.Delete);}
         }
         return {};
       }

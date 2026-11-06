@@ -18,7 +18,7 @@ const getJwks = () => {
 
 export const createJWT = (user) => {
   const secret = process.env.JWT_SECRET;
-  if (!secret) throw new Error("JWT_SECRET is not configured");
+  if (!secret) {throw new Error("JWT_SECRET is not configured");}
 
   return new SignJWT({
     user_id: user.user_id,
@@ -43,7 +43,7 @@ export const verifyToken = async (token) => {
   }
 
   for (const secret of [process.env.SUPABASE_JWT_SECRET, process.env.JWT_SECRET]) {
-    if (!secret) continue;
+    if (!secret) {continue;}
     try {
       return (await jwtVerify(token, encoder.encode(secret), { algorithms: ["HS256"] }))
         .payload;
@@ -64,10 +64,10 @@ const header = (event, name) => {
 const findUser = async (rawId, email) => {
   if (rawId) {
     const byAuth = await users.byAuthId(String(rawId));
-    if (byAuth) return byAuth;
+    if (byAuth) {return byAuth;}
     if (isUUID(String(rawId))) {
       const byId = await users.get(String(rawId));
-      if (byId) return byId;
+      if (byId) {return byId;}
     }
   }
   return email ? users.byEmail(email) : null;
@@ -92,9 +92,9 @@ const provision = async (payload, rawId, email) => {
     try {
       return await users.create({ ...profile, username });
     } catch (error) {
-      if (!(error instanceof HttpError) || error.status !== 409) throw error;
+      if (!(error instanceof HttpError) || error.status !== 409) {throw error;}
       const existing = await findUser(rawId, email);
-      if (existing) return existing;
+      if (existing) {return existing;}
     }
   }
   return null;
@@ -118,6 +118,6 @@ export const authenticate = async (event) => {
   const user =
     (await findUser(rawId, email)) ?? (rawId ? await provision(payload, rawId, email) : null);
 
-  if (!user) throw new HttpError(401, "User not found for this token");
+  if (!user) {throw new HttpError(401, "User not found for this token");}
   return user;
 };

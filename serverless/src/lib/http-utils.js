@@ -7,6 +7,6 @@ export const isUUID = (value) =>
   typeof value === "string" && UUID_REGEX.test(value);
 
 export const requireUUID = (value, message) => {
-  if (!isUUID(value)) throw new HttpError(400, message);
+  if (!isUUID(value)) {throw new HttpError(400, message);}
   return value;
 };

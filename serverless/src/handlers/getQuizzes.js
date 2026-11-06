@@ -13,7 +13,7 @@ export const handler = route(async ({ query, user }) => {
     ...new Set([...memberships.map((m) => m.group_id), ...owned.map((g) => g.id)]),
   ];
 
-  if (userGroupIds.length === 0) return [200, { quizzes: [] }];
+  if (userGroupIds.length === 0) {return [200, { quizzes: [] }];}
 
   let targetIds = userGroupIds;
 

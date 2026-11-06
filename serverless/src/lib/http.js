@@ -11,7 +11,7 @@ export const respond = (status, body) => ({
 });
 
 const parseBody = (event) => {
-  if (!event.body) return {};
+  if (!event.body) {return {};}
   const raw = event.isBase64Encoded
     ? Buffer.from(event.body, "base64").toString("utf8")
     : event.body;
@@ -53,30 +53,30 @@ export const publicUser = (user) => {
  */
 export const route =
   (fn, { auth = true } = {}) =>
-  async (event) => {
-    try {
-      const ctx = {
-        params: event.pathParameters ?? {},
-        query: event.queryStringParameters ?? {},
-        body: parseBody(event),
-        user: null,
-      };
+    async (event) => {
+      try {
+        const ctx = {
+          params: event.pathParameters ?? {},
+          query: event.queryStringParameters ?? {},
+          body: parseBody(event),
+          user: null,
+        };
 
-      if (auth) {
-        ctx.user = await authenticate(event);
-      }
+        if (auth) {
+          ctx.user = await authenticate(event);
+        }
 
-      const [status, body] = await fn(ctx);
-      return respond(status, body);
-    } catch (error) {
-      if (error instanceof HttpError) {
-        return respond(error.status, {
-          success: false,
-          message: error.message,
-          ...error.extra,
-        });
+        const [status, body] = await fn(ctx);
+        return respond(status, body);
+      } catch (error) {
+        if (error instanceof HttpError) {
+          return respond(error.status, {
+            success: false,
+            message: error.message,
+            ...error.extra,
+          });
+        }
+        console.error("Unhandled error:", error);
+        return respond(500, { success: false, message: "Internal server error" });
       }
-      console.error("Unhandled error:", error);
-      return respond(500, { success: false, message: "Internal server error" });
-    }
-  };
+    };

@@ -19,9 +19,9 @@ export const handler = route(
     const user =
       (await users.byUsername(identifier)) ?? (await users.byEmail(identifier));
 
-    if (!user?.password) throw invalid();
+    if (!user?.password) {throw invalid();}
 
-    if (!(await bcrypt.compare(password, user.password))) throw invalid();
+    if (!(await bcrypt.compare(password, user.password))) {throw invalid();}
 
     return [
       200,

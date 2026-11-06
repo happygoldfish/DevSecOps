@@ -29,6 +29,7 @@ Requires AWS credentials and the [SAM CLI](https://docs.aws.amazon.com/serverles
 
 ```bash
 npm ci
+npm run lint
 npm test
 npm run build
 sam deploy --guided \

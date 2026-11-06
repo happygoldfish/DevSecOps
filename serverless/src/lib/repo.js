@@ -33,7 +33,7 @@ const queryAll = async (params) => {
 
 const chunk = (list, size) => {
   const out = [];
-  for (let i = 0; i < list.length; i += size) out.push(list.slice(i, i + size));
+  for (let i = 0; i < list.length; i += size) {out.push(list.slice(i, i + size));}
   return out;
 };
 
@@ -152,7 +152,7 @@ export const users = {
 
   async update(existing, patch) {
     const next = { ...existing, ...patch };
-    if (patch.email) next.email = patch.email.toLowerCase();
+    if (patch.email) {next.email = patch.email.toLowerCase();}
 
     const before = new Set(userKeys(existing));
     const after = new Set(userKeys(next));
@@ -251,7 +251,7 @@ export const groups = {
         return group;
       } catch (error) {
         // Retry only on invite code collision
-        if (error.name !== "TransactionCanceledException") throw error;
+        if (error.name !== "TransactionCanceledException") {throw error;}
       }
     }
     throw new Error("Could not generate a unique invite code");

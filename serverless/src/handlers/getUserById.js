@@ -8,7 +8,7 @@ export const handler = route(async ({ params }) => {
   );
 
   const user = await users.get(id);
-  if (!user) throw new HttpError(404, "User not found");
+  if (!user) {throw new HttpError(404, "User not found");}
 
   return [200, { success: true, user: publicUser(user) }];
 });

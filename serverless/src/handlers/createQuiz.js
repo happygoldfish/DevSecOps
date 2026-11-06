@@ -6,7 +6,7 @@ export const handler = route(async ({ body, user }) => {
   const { title, category, group_id, questions } = parseWith(createQuizSchema, body);
 
   const group = await groups.get(group_id);
-  if (!group) throw new HttpError(404, "Group not found");
+  if (!group) {throw new HttpError(404, "Group not found");}
 
   if (!(await groupMembers.find(group.id, user.user_id))) {
     throw new HttpError(403, "You must be a member of this group to create a quiz");
